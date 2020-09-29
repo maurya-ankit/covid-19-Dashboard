@@ -82,6 +82,7 @@ def plot_map(col, df=df, pal='matter'):
                         color=col, hover_name="Country/Region",
                         title=col, hover_data=[col], color_continuous_scale=pal)
     #     fig.update_layout(coloraxis_showscale=False)
+    fig.update_layout(height=500, margin={"r":0,"t":30,"l":0,"b":0})
     return fig
 
 
@@ -112,126 +113,37 @@ def plot_monthwise(col, hue='#2874D6'):
 
 
 ###########################################################################
+intro_layout=html.Div([
+    html.Div([
+        html.Div([
+            html.H3('Name : Aakash Prajapati'),
+            dcc.Graph(id='g1', figure={'data': [{'y': [1, 2, 3]}]})
+        ], className="six columns"),
+
+        html.Div([
+            html.H3('Column 2'),
+            dcc.Graph(id='g2', figure={'data': [{'y': [1, 2, 3]}]})
+        ], className="six columns"),
+    ], className="row"),
+    html.Div([
+        html.Div([
+            html.H3('Column 1'),
+            dcc.Graph(id='g1', figure={'data': [{'y': [1, 2, 3]}]})
+        ], className="six columns"),
+
+        html.Div([
+            html.H3('Column 2'),
+            dcc.Graph(id='g2', figure={'data': [{'y': [1, 2, 3]}]})
+        ], className="six columns"),
+    ], className="row"),
+])
+
 day_wise_layout = html.Div(
     [
         dcc.Store(id="aggregate_data"),
         # empty Div to trigger javascript file for graph resizing
         html.Div(id="output-clientside"),
-        html.Div(
-            [
-                html.Div(
-                    [
-                        html.Img(
-                            src=app.get_asset_url("dash-logo.png"),
-                            id="plotly-image",
-                            style={
-                                "height": "60px",
-                                "width": "auto",
-                                "margin-bottom": "25px",
-                            },
-                        )
-                    ],
-                    className="one-third column",
-                ),
-                html.Div(
-                    [
-                        html.Div(
-                            [
-                                html.H3(
-                                    "Covid-19 Dashboard",
-                                    style={"margin-bottom": "0px"},
-                                ),
-                                html.H5(
-                                    "Project by Group #06", style={"margin-top": "0px"}
-                                ),
-                            ]
-                        )
-                    ],
-                    className="one-half column",
-                    id="title",
-                ),
-                html.Div(
-                    [
-                        html.Div(
-                            [
-                                html.A(
-                                    html.Button("Day-Wise", id="day-w"),
-                                    href="/day_wise",
-                                ),
-                                html.A(
-                                    html.Button("Country-Wise", id="country-w"),
-                                    href="/country_wise",
-                                ),
-                                html.A(
-                                    html.Button("World-Map", id="world-m"),
-                                    href="/world_map",
-                                ),
-                                html.A(
-                                    html.Button("World-report", id="world_r"),
-                                    href="/world_report",
-                                ),
-                            ]
-                        ),
-                    ],
-                    className="one-third column",
-                    id="title",
-                ),
-            ],
-            id="header",
-            className="row flex-display",
-            style={"margin-bottom": "25px"},
-        ),
-        # html.Div(
-        #     [
-        #         html.Div(
-        #             [
-        #                 html.P("Select Country:", className="control_label"),
-        #                 dcc.Dropdown(
-        #                     id="country_name",
-        #
-        #                     options=[{'label': i, 'value': i} for i in df['Country/Region'].tolist()],
-        #                     value=f"{df['Country/Region'].tolist()[79]}",
-        #                     className="dcc_control",
-        #                 ),
-        #             ],
-        #             className="pretty_container four columns",
-        #             id="cross-filter-options",
-        #         ),
-        #         html.Div(
-        #             [
-        #                 html.Div(
-        #                     [
-        #                         html.Div(
-        #                             [html.H6(id="confirmed_cases"), html.P("No. of Confirmed Cases")],
-        #                             id="confirmed",
-        #                             className="pretty_container three columns",
-        #                         ),
-        #                         html.Div(
-        #                             [html.H6(id="death_cases"), html.P("No. of Deaths")],
-        #                             id="death",
-        #                             className="pretty_container three columns",
-        #                         ),
-        #                         html.Div(
-        #                             [html.H6(id="recovered_cases"), html.P("Recovered cases")],
-        #                             id="recovered",
-        #                             className="pretty_container three columns",
-        #                         ),
-        #                         html.Div(
-        #                             [html.H6(id="active_cases"), html.P("Active cases")],
-        #                             id="active",
-        #                             className="pretty_container three columns",
-        #                         ),
-        #                     ],
-        #                     id="info-container",
-        #                     className="container-display",
-        #                 ),
-        #             ],
-        #             id="right-column",
-        #             className="eight columns",
-        #         ),
-        #     ],
-        #     className="row flex-display",
-        # ),
+        
         html.Div(
             [
                 html.P("Select Cotegory:", className="control_label"),
@@ -245,19 +157,35 @@ day_wise_layout = html.Div(
             ],
             className="pretty_container",
             id="cross-filter-options2",
-            style={'width': '75%', 'margin': 25, 'textAlign': 'center'}
+            style={'textAlign': 'center'}
+
         ),
         html.Div(
-            [dcc.Graph(id="category_plot")],
+            [
+        html.Div(
+            [dcc.Graph(id="category_plot"),
+            html.H3("Horizontal Bar", className="control_label"),
+            
+            ],
             className="pretty_container",
+            style={'textAlign': 'center'}
         ),
         html.Div(
-            [dcc.Graph(id="plot_daywise")],
+            [dcc.Graph(id="plot_daywise"),
+            html.H3("Vertical Bar", className="control_label"),
+            ],
             className="pretty_container",
+            style={'textAlign': 'center'}
+        ),
+        ],
+            className="row flex-display",
         ),
         html.Div(
-            [dcc.Graph(id="plot_daywise_line")],
-            className="pretty_container",
+            [dcc.Graph(id="plot_daywise_line"),
+            html.H3("Line Chart", className="control_label"),
+            ],
+            className="pretty_container six column",
+            style={'textAlign': 'center'}
         ),
     ],
     id="mainContainer",
@@ -268,70 +196,7 @@ country_wise_layout = html.Div(
         dcc.Store(id="aggregate_data"),
         # empty Div to trigger javascript file for graph resizing
         html.Div(id="output-clientside"),
-        html.Div(
-            [
-                html.Div(
-                    [
-                        html.Img(
-                            src=app.get_asset_url("dash-logo.png"),
-                            id="plotly-image",
-                            style={
-                                "height": "60px",
-                                "width": "auto",
-                                "margin-bottom": "25px",
-                            },
-                        )
-                    ],
-                    className="one-third column",
-                ),
-                html.Div(
-                    [
-                        html.Div(
-                            [
-                                html.H3(
-                                    "Covid-19 Dashboard",
-                                    style={"margin-bottom": "0px"},
-                                ),
-                                html.H5(
-                                    "Project by Group #06", style={"margin-top": "0px"}
-                                ),
-                            ]
-                        )
-                    ],
-                    className="one-half column",
-                    id="title",
-                ),
-                html.Div(
-                    [
-                        html.Div(
-                            [
-                                html.A(
-                                    html.Button("Day-Wise", id="day-w"),
-                                    href="/day_wise",
-                                ),
-                                html.A(
-                                    html.Button("Country-Wise", id="country-w"),
-                                    href="/country_wise",
-                                ),
-                                html.A(
-                                    html.Button("World-Map", id="world-m"),
-                                    href="/world_map",
-                                ),
-                                html.A(
-                                    html.Button("World-report", id="world_r"),
-                                    href="/world_report",
-                                ),
-                            ]
-                        ),
-                    ],
-                    className="one-third column",
-                    id="title",
-                ),
-            ],
-            id="header",
-            className="row flex-display",
-            style={"margin-bottom": "25px"},
-        ),
+        
         html.Div(
             [
                 html.Div(
@@ -347,6 +212,8 @@ country_wise_layout = html.Div(
                     ],
                     className="pretty_container four columns",
                     id="cross-filter-options",
+                    style={'textAlign': 'center'}
+
                 ),
                 html.Div(
                     [
@@ -396,15 +263,24 @@ country_wise_layout = html.Div(
             ],
             className="pretty_container",
             id="cross-filter-options2",
-            style={'width': '75%', 'margin': 25, 'textAlign': 'center'}
+            style={'textAlign': 'center'}
+
         ),
         html.Div(
-            [dcc.Graph(id="plot_daywise_country")],
-            className="pretty_container"
-        ),
-        html.Div(
-            [dcc.Graph(id="plot_daywise_line_country")],
+            [dcc.Graph(id="plot_daywise_country"),
+            html.H3("Stacked Bar Chart", className="control_label"),
+            
+            ],
             className="pretty_container",
+            style={'textAlign': 'center'}
+        ),
+        html.Div(
+            [dcc.Graph(id="plot_daywise_line_country"),
+            html.H3("Line Chart", className="control_label"),
+            
+            ],
+            className="pretty_container",
+            style={'textAlign': 'center'}
         ),
     ],
     id="mainContainer",
@@ -415,70 +291,7 @@ world_map_layout = html.Div(
         dcc.Store(id="aggregate_data"),
         # empty Div to trigger javascript file for graph resizing
         html.Div(id="output-clientside"),
-        html.Div(
-            [
-                html.Div(
-                    [
-                        html.Img(
-                            src=app.get_asset_url("dash-logo.png"),
-                            id="plotly-image",
-                            style={
-                                "height": "60px",
-                                "width": "auto",
-                                "margin-bottom": "25px",
-                            },
-                        )
-                    ],
-                    className="one-third column",
-                ),
-                html.Div(
-                    [
-                        html.Div(
-                            [
-                                html.H3(
-                                    "Covid-19 Dashboard",
-                                    style={"margin-bottom": "0px"},
-                                ),
-                                html.H5(
-                                    "Project by Group #06", style={"margin-top": "0px"}
-                                ),
-                            ]
-                        )
-                    ],
-                    className="one-half column",
-                    id="title",
-                ),
-                html.Div(
-                    [
-                        html.Div(
-                            [
-                                html.A(
-                                    html.Button("Day-Wise", id="day-w"),
-                                    href="/day_wise",
-                                ),
-                                html.A(
-                                    html.Button("Country-Wise", id="country-w"),
-                                    href="/country_wise",
-                                ),
-                                html.A(
-                                    html.Button("World-Map", id="world-m"),
-                                    href="/world_map",
-                                ),
-                                html.A(
-                                    html.Button("World-report", id="world_r"),
-                                    href="/world_report",
-                                ),
-                            ]
-                        ),
-                    ],
-                    className="one-third column",
-                    id="title",
-                ),
-            ],
-            id="header",
-            className="row flex-display",
-            style={"margin-bottom": "25px"},
-        ),
+        
         html.Div(
             [
                 html.P("Select Cotegory:", className="control_label"),
@@ -492,15 +305,26 @@ world_map_layout = html.Div(
             ],
             className="pretty_container",
             id="cross-filter-options2",
-            style={'width': '75%', 'margin': 25, 'textAlign': 'center'}
+            style={'textAlign': 'center'}
+
         ),
         html.Div(
-            [dcc.Graph(id="plot_world_map")],
-            className="pretty_container"
-        ),
-        html.Div(
-            [dcc.Graph(id="world_map_slider")],
+            [                
+                dcc.Graph(id="plot_world_map"),
+                html.H2("Selected Data Cotegory on Map", className="control_label"),
+                ],
             className="pretty_container",
+            style={'textAlign': 'center'}
+        ),
+        html.Div(
+            [                
+                dcc.Graph(id="world_map_slider"),
+                html.H2("Covid-19 Data on Map over Time", className="control_label"),
+                
+                ],
+
+            className="pretty_container",
+            style={'textAlign': 'center'}
         ),
     ],
     id="mainContainer",
@@ -511,70 +335,7 @@ world_report = html.Div(
         dcc.Store(id="aggregate_data"),
         # empty Div to trigger javascript file for graph resizing
         html.Div(id="output-clientside"),
-        html.Div(
-            [
-                html.Div(
-                    [
-                        html.Img(
-                            src=app.get_asset_url("dash-logo.png"),
-                            id="plotly-image",
-                            style={
-                                "height": "60px",
-                                "width": "auto",
-                                "margin-bottom": "25px",
-                            },
-                        )
-                    ],
-                    className="one-third column",
-                ),
-                html.Div(
-                    [
-                        html.Div(
-                            [
-                                html.H3(
-                                    "Covid-19 Dashboard",
-                                    style={"margin-bottom": "0px"},
-                                ),
-                                html.H5(
-                                    "Project by Group #06", style={"margin-top": "0px"}
-                                ),
-                            ]
-                        )
-                    ],
-                    className="one-half column",
-                    id="title",
-                ),
-                html.Div(
-                    [
-                        html.Div(
-                            [
-                                html.A(
-                                    html.Button("Day-Wise", id="day-w"),
-                                    href="/day_wise",
-                                ),
-                                html.A(
-                                    html.Button("Country-Wise", id="country-w"),
-                                    href="/country_wise",
-                                ),
-                                html.A(
-                                    html.Button("World-Map", id="world-m"),
-                                    href="/world_map",
-                                ),
-                                html.A(
-                                    html.Button("World-report", id="world_r"),
-                                    href="/world_report",
-                                ),
-                            ]
-                        ),
-                    ],
-                    className="one-third column",
-                    id="title",
-                ),
-            ],
-            id="header",
-            className="row flex-display",
-            style={"margin-bottom": "25px"},
-        ),
+        
         html.Div(
             [
                 html.P("Select Cotegory:", className="control_label"),
@@ -588,17 +349,27 @@ world_report = html.Div(
             ],
             className="pretty_container",
             id="cross-filter-options2",
-            style={'width': '75%', 'margin': 25, 'textAlign': 'center'}
+            style={'textAlign': 'center'}
         ),
         html.Div(
             [
                 html.Div(
-                    [dcc.Graph(id="plot_weekly_report")],
-                    className="pretty_container six column"
+                    [
+                        dcc.Graph(id="plot_weekly_report"),
+                html.H3("Weekly Covid-19 Data", className="control_label"),
+                        ],
+                    className="pretty_container six column",
+            style={'textAlign': 'center'}
+
                 ),
                 html.Div(
-                    [dcc.Graph(id="plot_monthly_report")],
+                    [                        
+                        dcc.Graph(id="plot_monthly_report"),
+                html.H3("Monthly Covid-19 Data", className="control_label"),
+                        ],
                     className="pretty_container six column",
+            style={'textAlign': 'center'}
+
                 ),
             ],
             className="row flex-display",
@@ -607,16 +378,6 @@ world_report = html.Div(
     id="mainContainer",
     style={"display": "flex", "flex-direction": "column"},
 )
-layout_index = html.Div([
-    dcc.Link('Navigate to "/day_wise"', href='/day_wise'),
-    html.Br(),
-    dcc.Link('Navigate to "/country_wise"', href='/country_wise'),
-    html.Br(),
-    dcc.Link('Navigate to "/world_map"', href='/world_map'),
-    html.Br(),
-    dcc.Link('Navigate to "/world_report"', href='/world_report'),
-
-])
 
 
 # Selectors -> Confirmed Cases
@@ -741,6 +502,8 @@ def update_well_text(category):
                         animation_frame=full_grouped["Date"].dt.strftime('%Y-%m-%d'),
                         title='Cases over time', color_continuous_scale=px.colors.sequential.matter)
     fig.update(layout_coloraxis_showscale=False)
+    fig.update_layout(height=700, margin={"r":0,"t":30,"l":0,"b":0})
+
     return fig
 
 
@@ -779,30 +542,77 @@ def update_well_text(category):
     return dff
 
 
-app.layout = url_bar_and_content_div
+# app.layout = url_bar_and_content_div
 
-# "complete" layout
-app.validation_layout = html.Div([
-    url_bar_and_content_div,
-    layout_index,
-    day_wise_layout,
+# # "complete" layout
+# app.validation_layout = html.Div([
+#     url_bar_and_content_div,
+#     day_wise_layout,
+# ])
+
+app.layout = html.Div([
+    html.Div(
+            [
+                html.Div(
+                    [
+                        html.Div(
+                            [
+                                html.H3(
+                                    "Covid-19 Dashboard",
+                                    style={"margin-bottom": "0px"},
+                                ),
+                                html.H5(
+                                    "Project by Group #06", style={"margin-top": "0px"}
+                                ),
+                            ]
+                        )
+                    ],
+                    className="one-half column",
+                    id="title",
+                ),
+
+            ],
+            id="header",
+            className="row flex-display",
+            style={'width': '75%', 'margin': 25, 'textAlign': 'center'}
+
+        ),
+    dcc.Tabs(id="tabs", value='tab-1', children=[
+        dcc.Tab(label='Day Wise', value='tab-1'),
+        dcc.Tab(label='Country Wise', value='tab-2'),
+        dcc.Tab(label='On World Map', value='tab-3'),
+        dcc.Tab(label='Weekly & Monthly report', value='tab-4'),
+    ]),
+    html.Div(id='tabs-content')
 ])
 
-
-@app.callback(Output('page-content', 'children'),
-              [Input('url', 'pathname')])
-def display_page(pathname):
-    if pathname == "/day_wise":
+@app.callback(Output('tabs-content', 'children'),
+              [Input('tabs', 'value')])
+def render_content(tab):
+    if tab == 'tab-1':
         return day_wise_layout
-    elif pathname == "/country_wise":
+    elif tab == 'tab-2':
         return country_wise_layout
-    elif pathname == "/world_map":
+    elif tab =='tab-3':
         return world_map_layout
-    elif pathname == "/world_report":
+    elif tab =='tab-4':
         return world_report
-    else:
-        return day_wise_layout
+
+
+# @app.callback(Output('page-content', 'children'),
+#               [Input('url', 'pathname')])
+# def display_page(pathname):
+#     if pathname == "/day_wise":
+#         return day_wise_layout
+#     elif pathname == "/country_wise":
+#         return country_wise_layout
+#     elif pathname == "/world_map":
+#         return world_map_layout
+#     elif pathname == "/world_report":
+#         return world_report
+#     else:
+#         return intro_layout
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server()

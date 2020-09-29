@@ -30,7 +30,8 @@ wheels/
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
-
+covid_19_jhu_data_web_scrap_and_cleaning/
+pythonenv3.8/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
