@@ -31,3 +31,9 @@ Run the app
 python app.py
 
 ```
+# Some Screenshots
+![1](ScreenshotCovid-1.png)
+![2](ScreenshotCovid-2.png)
+![3](ScreenshotCovid-3.png)
+![4](ScreenshotCovid-4.png)
+![5](ScreenshotCovid-5.png)
