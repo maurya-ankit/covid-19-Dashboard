@@ -31,6 +31,13 @@ Run the app
 python app.py
 
 ```
+Update Data
+
+```
+
+python updateDataset.py
+
+```
 # Some Screenshots
 ![1](ScreenshotCovid-1.png)
 ![2](ScreenshotCovid-2.png)
